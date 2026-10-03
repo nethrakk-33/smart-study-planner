@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyFlow - Smart Study Planner</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            📚 <span>StudyFlow</span>
+        </div>
+
+        <nav>
+
+            <button class="nav-item active"
+                    onclick="showSection('dashboard', this)">
+                🏠 <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('tasks', this)">
+                ✅ <span>My Tasks</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('analytics', this)">
+                📊 <span>Analytics</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('goals', this)">
+                🎯 <span>Goals</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('calculator', this)">
+                🧮 <span>Calculator</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('settings', this)">
+                ⚙️ <span>Settings</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-profile">
+
+            <div class="profile-icon">
+                👩‍🎓
+            </div>
+
+            <div>
+                <strong>Student</strong>
+                <small>Keep learning!</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+                <h1>Smart Study Planner</h1>
+                <p id="currentDate">Today</p>
+            </div>
+
+            <button class="dark-mode-btn"
+                    onclick="toggleDarkMode()">
+                🌙
+            </button>
+
+        </header>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section id="dashboard" class="page-section active-section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Dashboard</h2>
+                    <p>Track your study progress.</p>
+                </div>
+
+                <button class="primary-btn"
+                        onclick="openTaskModal()">
+                    + Add Task
+                </button>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">📚</div>
+
+                    <div>
+                        <span>Total Tasks</span>
+                        <h3 id="totalCount">0</h3>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon green">✅</div>
+
+                    <div>
+                        <span>Completed</span>
+                        <h3 id="completedCount">0</h3>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">⏳</div>
+
+                    <div>
+                        <span>Pending</span>
+                        <h3 id="pendingCount">0</h3>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon red">⚠️</div>
+
+                    <div>
+                        <span>Overdue</span>
+                        <h3 id="overdueCount">0</h3>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- DASHBOARD GRID -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- DAILY PROGRESS -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h3>Daily Progress</h3>
+                            <p id="dailyProgressText">
+                                0 of 0 tasks completed
+                            </p>
+                        </div>
+
+                        <strong id="progressPercentage">
+                            0%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress-track">
+
+                        <div id="mainProgressBar"
+                             class="progress-fill">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STREAK -->
+
+                <div class="dashboard-card streak-card">
+
+                    <div class="streak-icon">
+                        🔥
+                    </div>
+
+                    <div>
+                        <span>Study Streak</span>
+
+                        <h2>
+                            <span id="streakNumber">0</span>
+                            days
+                        </h2>
+
+                        <p id="streakMessage">
+                            Start your streak today!
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TODAY + SMART INSIGHT -->
+
+            <div class="dashboard-grid">
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h3>Today's Tasks</h3>
+                            <p>Your study tasks for today.</p>
+                        </div>
+
+                    </div>
+
+                    <div id="dashboardTasks"
+                         class="dashboard-task-list">
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h3>💡 Smart Insight</h3>
+                            <p>StudyFlow suggestion</p>
+                        </div>
+
+                    </div>
+
+                    <div id="smartInsight"
+                         class="insight-box">
+
+                        Add some tasks to get study suggestions.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- REMINDERS -->
+
+            <div class="dashboard-card reminder-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h3>🔔 Reminders</h3>
+                        <p>
+                            <span id="reminderCount">0</span>
+                            upcoming reminders
+                        </p>
+                    </div>
+
+                </div>
+
+                <div id="reminderList">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TASKS ================= -->
+
+        <section id="tasks" class="page-section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>My Tasks</h2>
+                    <p>Manage all your study tasks.</p>
+                </div>
+
+                <button class="primary-btn"
+                        onclick="openTaskModal()">
+                    + Add Task
+                </button>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="task-controls">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔍 Search tasks..."
+                    oninput="searchTasks()"
+                >
+
+                <select id="subjectFilter"
+                        onchange="renderTasks()">
+
+                    <option value="all">
+                        All Subjects
+                    </option>
+
+                    <option value="Java">
+                        Java
+                    </option>
+
+                    <option value="Python">
+                        Python
+                    </option>
+
+                    <option value="C">
+                        C
+                    </option>
+
+                    <option value="Mathematics">
+                        Mathematics
+                    </option>
+
+                    <option value="Data Structures">
+                        Data Structures
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="task-container">
+
+                <div id="taskList"
+                     class="task-list">
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ANALYTICS ================= -->
+
+        <section id="analytics" class="page-section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Analytics</h2>
+                    <p>Understand your study performance.</p>
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📚
+                    </div>
+
+                    <div>
+                        <span>Total Tasks</span>
+                        <h3 id="analyticsTotal">0</h3>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        📈
+                    </div>
+
+                    <div>
+                        <span>Completion Rate</span>
+                        <h3 id="completionRate">0%</h3>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        🔥
+                    </div>
+
+                    <div>
+                        <span>Study Streak</span>
+                        <h3 id="analyticsStreak">0</h3>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        ⭐
+                    </div>
+
+                    <div>
+                        <span>Productivity</span>
+                        <h3 id="productivityScore">0%</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h3>Subject Progress</h3>
+                        <p>Completed tasks by subject.</p>
+                    </div>
+
+                </div>
+
+                <div id="subjectProgress">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= GOALS ================= -->
+
+        <section id="goals" class="page-section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Study Goals</h2>
+                    <p>Set a daily target and stay consistent.</p>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card goal-card">
+
+                <div class="goal-icon">
+                    🎯
+                </div>
+
+                <h2>Daily Task Goal</h2>
+
+                <p>
+                    Choose how many tasks you want to complete each day.
+                </p>
+
+
+                <div class="goal-input">
+
+                    <input
+                        type="number"
+                        id="goalTarget"
+                        min="1"
+                        max="50"
+                        value="5"
+                        onchange="updateGoal()"
+                    >
+
+                    <span>tasks per day</span>
+
+                </div>
+
+
+                <div class="progress-track">
+
+                    <div id="goalProgressBar"
+                         class="progress-fill">
+                    </div>
+
+                </div>
+
+
+                <p id="goalText">
+                    0 / 5 tasks completed
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h3>💡 Study Tips</h3>
+
+                <ul class="tips-list">
+
+                    <li>
+                        Break large topics into smaller tasks.
+                    </li>
+
+                    <li>
+                        Complete important tasks first.
+                    </li>
+
+                    <li>
+                        Take short breaks between study sessions.
+                    </li>
+
+                    <li>
+                        Try to maintain your study streak.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CALCULATOR ================= -->
+
+        <section id="calculator" class="page-section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Calculator</h2>
+                    <p>Quick calculations while studying.</p>
+                </div>
+
+            </div>
+
+
+            <div class="calculator-card">
+
+                <input
+                    type="text"
+                    id="calcDisplay"
+                    class="calc-display"
+                    value="0"
+                    readonly
+                >
+
+
+                <div class="calculator-buttons">
+
+                    <button
+                        onclick="clearCalculator()"
+                        class="calc-clear">
+                        AC
+                    </button>
+
+                    <button onclick="deleteCalculator()">
+                        ⌫
+                    </button>
+
+                    <button onclick="calculatorInput('%')">
+                        %
+                    </button>
+
+                    <button onclick="calculatorInput('/')">
+                        ÷
+                    </button>
+
+
+                    <button onclick="calculatorInput('7')">
+                        7
+                    </button>
+
+                    <button onclick="calculatorInput('8')">
+                        8
+                    </button>
+
+                    <button onclick="calculatorInput('9')">
+                        9
+                    </button>
+
+                    <button onclick="calculatorInput('*')">
+                        ×
+                    </button>
+
+
+                    <button onclick="calculatorInput('4')">
+                        4
+                    </button>
+
+                    <button onclick="calculatorInput('5')">
+                        5
+                    </button>
+
+                    <button onclick="calculatorInput('6')">
+                        6
+                    </button>
+
+                    <button onclick="calculatorInput('-')">
+                        −
+                    </button>
+
+
+                    <button onclick="calculatorInput('1')">
+                        1
+                    </button>
+
+                    <button onclick="calculatorInput('2')">
+                        2
+                    </button>
+
+                    <button onclick="calculatorInput('3')">
+                        3
+                    </button>
+
+                    <button onclick="calculatorInput('+')">
+                        +
+                    </button>
+
+
+                    <button
+                        onclick="calculatorInput('0')"
+                        class="zero">
+                        0
+                    </button>
+
+                    <button onclick="calculatorInput('.')">
+                        .
+                    </button>
+
+                    <button
+                        onclick="calculateResult()"
+                        class="equals">
+                        =
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SETTINGS ================= -->
+
+        <section id="settings" class="page-section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Settings</h2>
+                    <p>Customize your StudyFlow experience.</p>
+                </div>
+
+            </div>
+
+
+            <div class="settings-card">
+
+                <div class="setting-row">
+
+                    <div>
+                        <h3>🌙 Dark Mode</h3>
+
+                        <p>
+                            Switch between light and dark themes.
+                        </p>
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="darkModeToggle"
+                            onchange="toggleDarkMode()"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-row danger-setting">
+
+                    <div>
+                        <h3>🗑️ Clear All Tasks</h3>
+
+                        <p>
+                            Delete all saved study tasks.
+                        </p>
+                    </div>
+
+                    <button
+                        class="danger-btn"
+                        onclick="clearAllTasks()">
+                        Clear Tasks
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= ADD TASK MODAL ================= -->
+
+    <div id="taskModal"
+         class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2>Add New Task</h2>
+                    <p>Create a study task.</p>
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeTaskModal()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <label>
+                Task Name
+            </label>
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Example: Complete Java assignment"
+            >
+
+
+            <label>
+                Subject
+            </label>
+
+            <select id="subject">
+
+                <option value="Java">
+                    Java
+                </option>
+
+                <option value="Python">
+                    Python
+                </option>
+
+                <option value="C">
+                    C
+                </option>
+
+                <option value="Mathematics">
+                    Mathematics
+                </option>
+
+                <option value="Data Structures">
+                    Data Structures
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <label>
+                Priority
+            </label>
+
+            <select id="priority">
+
+                <option value="High">
+                    High Priority
+                </option>
+
+                <option value="Medium">
+                    Medium Priority
+                </option>
+
+                <option value="Low">
+                    Low Priority
+                </option>
+
+            </select>
+
+
+            <label>
+                Due Date
+            </label>
+
+            <input
+                type="date"
+                id="dueDate"
+            >
+
+
+            <div class="modal-buttons">
+
+                <button
+                    class="secondary-btn"
+                    onclick="closeTaskModal()">
+                    Cancel
+                </button>
+
+                <button
+                    class="primary-btn"
+                    onclick="addTask()">
+                    Add Task
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
